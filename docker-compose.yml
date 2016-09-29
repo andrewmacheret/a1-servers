@@ -1,0 +1,53 @@
+version: '2'
+services:
+
+  a1-web-server:
+    build: a1-web-server-nginx/
+    image: ${AWS_ECR}/a1-server/nginx
+    ports:
+      - 9999:80
+    external_links:
+      - chess
+      - montyhall
+      - vta-tracker
+      - remote-apis
+      - ascii-cow
+
+  chess:
+    build: chess-server/
+    image: ${AWS_ECR}/projects/server/chess-server
+
+  montyhall:
+    image: ${AWS_ECR}/projects/server/montyhall-server
+
+  vta-tracker:
+    build: vta-tracker-server/
+    image: ${AWS_ECR}/projects/server/vta-tracker-server
+    external_links:
+      - mysql
+
+  remote-apis:
+    build: remote-apis/
+    image: ${AWS_ECR}/projects/server/remote-apis
+
+  ascii-cow:
+    build: ascii-cow/
+    image: andrewmacheret/ascii-cow
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: fourwordsalluppercase
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./store/mysql:/var/lib/mysql
+    hostname: mysql
+
+  mongo:
+    image: mongo:3.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./store/mongo:/data/db
+    hostname: mongo
