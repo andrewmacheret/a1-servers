@@ -5,7 +5,7 @@ services:
 
   a1-web-server:
     build: a1-web-server-nginx/
-    image: ${AWS_ECR}/a1-server/nginx
+    image: andrewmacheret/a1-web-server-nginx
     ports:
       - 9999:80
     external_links:
