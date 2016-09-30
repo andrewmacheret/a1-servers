@@ -39,14 +39,14 @@ services:
 
   chess-server:
     build: chess-server/
-    image: ${AWS_ECR}/projects/server/chess-server
+    image: andrewmacheret/chess-server
 
   montyhall-server:
-    image: ${AWS_ECR}/projects/server/montyhall-server
+    image: andrewmacheret/montyhall-server
 
   vta-tracker-server:
     build: vta-tracker-server/
-    image: ${AWS_ECR}/projects/server/vta-tracker-server
+    image: andrewmacheret/vta-tracker-server
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     external_links:
@@ -54,7 +54,7 @@ services:
 
   remote-apis:
     build: remote-apis/
-    image: ${AWS_ECR}/projects/server/remote-apis
+    image: andrewmacheret/remote-apis
 
   ascii-cow:
     build: ascii-cow/
