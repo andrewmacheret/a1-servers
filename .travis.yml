@@ -22,6 +22,7 @@ script:
   # build and test
   - set -e
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  - grep '^  [a-z]' < docker-compose.yml | tr -d ': ' | xargs mkdir
   - docker-compose pull
   #- docker-compose -d up a1-web-server chess-server montyhall-server remote-apis ascii-cow
   # TODO: vta-server, mongo, mysql
