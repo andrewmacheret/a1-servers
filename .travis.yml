@@ -29,10 +29,10 @@ script:
   - sleep 10
   
   - test "$( curl -sI localhost:"${TEST_PORT}"                | head -1 | sed 's/\r$//' )" == "HTTP/1.1 403 Forbidden"
-  - test "$( curl -sI localhost:"${TEST_PORT}/chess/"         | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/remote-apis/"   | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/montyhall/"     | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/ascii-cow/cows" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/chess/"         | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/remote-apis/"   | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/montyhall/"     | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/ascii-cow/cows" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
   
   - docker-compose down
 
