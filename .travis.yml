@@ -24,7 +24,7 @@ script:
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - awk '$1 == "build:" {print $2}' docker-compose.yml | xargs mkdir
   - docker-compose pull
-  - docker-compose -d up a1-web-server chess-server montyhall-server remote-apis ascii-cow
+  - docker-compose up -d a1-web-server chess-server montyhall-server remote-apis ascii-cow
   # TODO: vta-server, mongo, mysql
   - sleep 10
   
