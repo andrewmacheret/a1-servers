@@ -7,8 +7,6 @@ env:
     # DOCKER_USERNAME and DOCKER_PASSWORD
     - secure: "dRQfHg6WPtHB3/ALpgVM9V9A5GNiQBt4sFNH1lAQ+E7pK8JCrgVbd/WispNiye48Iog5k20zaBXBPj/S03K7H1u3pFm2/YlRbDJ+QI+rM020yesf2bAhcrZVbgk43GPf3rjiTDqNktH1D4uR7kMXzC6Lh4l/LWetGaeSIA6ycJVcOVdh6yvJB33PDN4CJv5+BRdOSrPSUl/uRZ860+dvtY9Rhz0Gm+sF6JcTNOKZgMyOS/t5okYbrRmYHYQtLbqqRY7pItkbkNLiMvVYnYv7wIYT/tNuuyNbmvsREJ5+Fkj7ZbAq+/90fozcUbZF6p06KcOpvwgnq11ak9F+dpoeUYsSKETN9qbThJWlQ22T2p8hwxXPREmC7BKlvSfzaG/c6rKHWh6X3EYKe81ljs4oj9xVNne5ziZbic9MXMGKt8JSjqMY58jktdDY8v93cYOrMo02kKla13yaaOWP2+u5Z3R/F8xdl02xMpuQn+8i3j7YiitvamC5C9l1Jo46z4ohGf5WOAGxdNRCTz5lqWNPES34pp5FpCjCFa2+YaxoUYgETNxEpsi9TIvaPVDyhSaXCQ/vSGuPb9c2FozipEnBUVB+1PM+rKvdrg3ufGfu5IPTZV/OhYuayJ2x2rKILLnaLutiVVyyR+kGsyrnlJ2vl/UbZugie36fK7sg16nqbxg="
     - secure: "W3vR19peBeJ3NbkUmF/4ec0ZAyyOin5s+38Fo4BYCO51t36qxI83m9t0P12v0oxmdybjAcpafKoTBXoSqyBvsPUAZwUFxnnkzLTGkQ+vzxZ2cTHXyUmp1jE0ietnqNDPwXgfXjmsKWkMmb26+eIylz5jVUH8B4FqfHyTn38Al1hvzXFY+hBdgQ8l9n2Se96bBtpmKK5JVRztntHtDu19sYFYeC85DRZ+W1JZ6rBKvBLj2TVaZ2w4liDfdFe+28sXUCSu6OryMwmtjCypN3bZYbHYvyEvW0w2VTJTVeKtF/jn7GukRGfCzRISxx2SkxwM+ADejwkK9HUSqDvx3rVBQEEDXvOPE8gsI4lhFEiXsBOJsXcIbs3TmHBiWiOL3SLUesv9YmfteILuGrbA0qZndQ/6VoJupyVTssTkQjzXOdnUYLcSAPHu44HO0F083f3AU/McPBz01DhLSMRmU7Rb5Z/8XhrWFlWUUZvm/CHp+gbRBgJedKiNduKOr0xOM+ghNmd730No3AgVoYT5hXIJBtNddkSImp3tS2RBDa6zITk66C73P3k1HMxdzD0OjTS85I/wYKHR94WWSTRM/q/j7bUid8QYhlRWMhJIDZcVWbOXvdcJ5M7jfntssAbPogYF4YMsZsDA18X1228NfJ/u0xNH8bx6EmG7dDWj2hLFEvI="
-    - CONTAINER_NAME='a1-server'
-    - VERSION=1.0
     - TEST_PORT=9999
     - MYSQL_ROOT_PASSWORD='test-password'
     - AWS_ECR='515875352897.dkr.ecr.us-east-1.amazonaws.com'
@@ -19,24 +17,23 @@ services:
 install:
   # install dependencies
   - set -e
+  - docker-compose --version
 
 script:
   # build and test
   - set -e
   - docker-compose pull
-  - docker-compose -d up a1-web-server chess-server montyhall-server remote-apis ascii-cow
+  #- docker-compose -d up a1-web-server chess-server montyhall-server remote-apis ascii-cow
   # TODO: vta-server, mongo, mysql
-  - sleep 10
+  #- sleep 10
   
-  - test "$( curl -sI localhost:"${TEST_PORT}"                | head -1 | sed 's/\r$//' )" == "HTTP/1.1 403 Forbidden"
-  - test "$( curl -sI localhost:"${TEST_PORT}/chess/"         | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/remote-apis/"   | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/montyhall/"     | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI localhost:"${TEST_PORT}/ascii-cow/cows" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}"                | head -1 | sed 's/\r$//' )" == "HTTP/1.1 403 Forbidden"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/chess/"         | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/remote-apis/"   | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/montyhall/"     | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  #- test "$( curl -sI localhost:"${TEST_PORT}/ascii-cow/cows" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
   
-  - docker-compose down
-
-  - docker rm -f "${CONTAINER_NAME}"
+  #- docker-compose down
 
 after_success:
   # TODO: push to server
