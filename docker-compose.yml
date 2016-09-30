@@ -1,5 +1,7 @@
 version: '2'
 services:
+  
+  ### web servers
 
   a1-web-server:
     build: a1-web-server-nginx/
@@ -7,37 +9,18 @@ services:
     ports:
       - 9999:80
     external_links:
-      - chess
-      - montyhall
-      - vta-tracker
+      - chess-server
+      - montyhall-server
+      - vta-tracker-server
       - remote-apis
       - ascii-cow
-
-  chess:
-    build: chess-server/
-    image: ${AWS_ECR}/projects/server/chess-server
-
-  montyhall:
-    image: ${AWS_ECR}/projects/server/montyhall-server
-
-  vta-tracker:
-    build: vta-tracker-server/
-    image: ${AWS_ECR}/projects/server/vta-tracker-server
-    external_links:
-      - mysql
-
-  remote-apis:
-    build: remote-apis/
-    image: ${AWS_ECR}/projects/server/remote-apis
-
-  ascii-cow:
-    build: ascii-cow/
-    image: andrewmacheret/ascii-cow
+  
+  ### databases
 
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: fourwordsalluppercase
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     ports:
       - "3306:3306"
     volumes:
@@ -51,3 +34,28 @@ services:
     volumes:
       - ./store/mongo:/data/db
     hostname: mongo
+
+  ### functional servers
+
+  chess-server:
+    build: chess-server/
+    image: ${AWS_ECR}/projects/server/chess-server
+
+  montyhall-server:
+    image: ${AWS_ECR}/projects/server/montyhall-server
+
+  vta-tracker-server:
+    build: vta-tracker-server/
+    image: ${AWS_ECR}/projects/server/vta-tracker-server
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    external_links:
+      - mysql
+
+  remote-apis:
+    build: remote-apis/
+    image: ${AWS_ECR}/projects/server/remote-apis
+
+  ascii-cow:
+    build: ascii-cow/
+    image: andrewmacheret/ascii-cow
