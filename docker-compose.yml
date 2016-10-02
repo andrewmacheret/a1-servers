@@ -9,9 +9,9 @@ services:
     ports:
       - 9999:80
     external_links:
-      - chess-server
-      - montyhall-server
-      - vta-tracker-server
+      - chess
+      - montyhall
+      - vta-tracker
       - remote-apis
       - ascii-cow
   
@@ -37,14 +37,14 @@ services:
 
   ### functional servers
 
-  chess-server:
+  chess:
     build: chess-server/
     image: andrewmacheret/chess-server
 
-  montyhall-server:
+  montyhall:
     image: andrewmacheret/montyhall-server
 
-  vta-tracker-server:
+  vta-tracker:
     build: vta-tracker-server/
     image: andrewmacheret/vta-tracker-server
     environment:
