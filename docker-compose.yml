@@ -17,7 +17,28 @@ services:
       - vta-tracker
       - remote-apis
       - ascii-cow
-  
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./store/certs:/etc/nginx/certs:ro
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt-nginx-proxy-companion
+    volumes:
+      - ./store/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
+
   ### databases
 
   mysql:
@@ -43,22 +64,31 @@ services:
   chess:
     build: chess-server/
     image: andrewmacheret/chess-server
+    environment:
+      VIRTUAL_HOST: chess.andrewmacheret.com
 
   montyhall:
     image: andrewmacheret/montyhall-server
+    environment:
+      VIRTUAL_HOST: montyhall.andrewmacheret.com
 
   vta-tracker:
     build: vta-tracker-server/
     image: andrewmacheret/vta-tracker-server
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      VIRTUAL_HOST: vta.andrewmacheret.com
     external_links:
       - mysql
 
   remote-apis:
     build: remote-apis/
     image: andrewmacheret/remote-apis
+    environment:
+      VIRTUAL_HOST: remote-apis.andrewmacheret.com
 
   ascii-cow:
     build: ascii-cow/
     image: andrewmacheret/ascii-cow
+    environment:
+      VIRTUAL_HOST: ascii-cow.andrewmacheret.com
