@@ -66,11 +66,15 @@ services:
     image: andrewmacheret/chess-server
     environment:
       VIRTUAL_HOST: chess.andrewmacheret.com
+      LETSENCRYPT_HOST: chess.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
   montyhall:
     image: andrewmacheret/montyhall-server
     environment:
       VIRTUAL_HOST: montyhall.andrewmacheret.com
+      LETSENCRYPT_HOST: montyhall.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
   vta-tracker:
     build: vta-tracker-server/
@@ -78,6 +82,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       VIRTUAL_HOST: vta.andrewmacheret.com
+      LETSENCRYPT_HOST: vta.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
     external_links:
       - mysql
 
@@ -86,9 +92,14 @@ services:
     image: andrewmacheret/remote-apis
     environment:
       VIRTUAL_HOST: remote-apis.andrewmacheret.com
+      LETSENCRYPT_HOST: remote-apis.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
   ascii-cow:
     build: ascii-cow/
     image: andrewmacheret/ascii-cow
     environment:
       VIRTUAL_HOST: ascii-cow.andrewmacheret.com
+      LETSENCRYPT_HOST: ascii-cow.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+
