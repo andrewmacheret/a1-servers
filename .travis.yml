@@ -34,7 +34,7 @@ script:
     test "$( curl -ksLI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 503 Service Temporarily Unavailable"
     test "$( curl -ksLI -H "Host: chess.andrewmacheret.com"          localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
     test "$( curl -ksLI -H "Host: remote-apis.andrewmacheret.com"    localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
-    test "$( curl -ksLI -H "Host: montyhall.andrewmacheret.com"      localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200"
+    test "$( curl -ksLI -H "Host: montyhall.andrewmacheret.com"      localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 "
     test "$( curl -ksLI -H "Host: ascii-cow.andrewmacheret.com"      localhost:"${TEST_PORT}"/cows | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
   
   - docker-compose down
