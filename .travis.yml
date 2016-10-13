@@ -2,6 +2,9 @@ sudo: required
 
 language: generic
 
+addons:
+  ssh_known_hosts: servers.andrewmacheret.com
+
 env:
   global:
     # DOCKER_USERNAME and DOCKER_PASSWORD
@@ -40,4 +43,9 @@ script:
   - docker-compose down
 
 after_success:
-  # TODO: push to server
+  # ssh deploy
+  - openssl aes-256-cbc -K $encrypted_0d3894087a6a_key -iv $encrypted_0d3894087a6a_iv -in id_rsa_a1-server.enc -out "${TRAVIS_BUILD_DIR}/id_rsa_a1-server" -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  - ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  - ssh a1@servers.andrewmacheret.com "cd ~/servers/a1-server && git pull && docker-compose pull nginx-proxy letsencrypt && docker-compose up -d --force-recreate nginx-proxy letsencrypt"
