@@ -28,11 +28,16 @@ script:
   # TODO: vta-server, mongo, mysql
   - sleep 10
   
-  - test "$( curl -sI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 403 Forbidden"
-  - test "$( curl -sI -H "Host: chess.andrewmacheret.com"          localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI -H "Host: remote-apis.andrewmacheret.com"    localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI -H "Host: montyhall.andrewmacheret.com"      localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
-  - test "$( curl -sI -H "Host: ascii-cow.andrewmacheret.com/cows" localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  - |+
+    test "$( curl -sI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 403 Forbidden"
+  - |+
+    test "$( curl -sI -H "Host: chess.andrewmacheret.com"          localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  - |+
+    test "$( curl -sI -H "Host: remote-apis.andrewmacheret.com"    localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  - |+
+    test "$( curl -sI -H "Host: montyhall.andrewmacheret.com"      localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
+  - |+
+    test "$( curl -sI -H "Host: ascii-cow.andrewmacheret.com/cows" localhost:"${TEST_PORT}" | head -1 | sed 's/\r$//' )" == "HTTP/1.1 200 OK"
   
   - docker-compose down
 
