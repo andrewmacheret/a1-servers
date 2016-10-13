@@ -3,21 +3,6 @@ services:
   
   ### web servers
 
-  a1-web-server:
-    build: a1-web-server-nginx/
-    image: andrewmacheret/a1-web-server-nginx
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./store/nginx/certs:/etc/nginx/certs
-    external_links:
-      - chess
-      - montyhall
-      - vta-tracker
-      - remote-apis
-      - ascii-cow
-
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
@@ -30,7 +15,7 @@ services:
       - /usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
-  letsencrypt-nginx-proxy-companion:
+  letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
     volumes:
