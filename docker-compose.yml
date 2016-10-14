@@ -88,3 +88,11 @@ services:
       LETSENCRYPT_HOST: ascii-cow.andrewmacheret.com
       LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
+  pun:
+    build: pun-server/
+    image: andrewmacheret/pun
+    environment:
+      VIRTUAL_HOST: pun.andrewmacheret.com
+      LETSENCRYPT_HOST: pun.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+
