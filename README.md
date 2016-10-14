@@ -4,4 +4,4 @@
 
 My collection of docker servers and scripts to manage them.
 
-See it running at [https://servers.andrewmacheret.com](https://servers.andrewmacheret.com).
+See it running at [http://servers.andrewmacheret.com](http://servers.andrewmacheret.com).
