@@ -90,7 +90,7 @@ services:
 
   pun:
     build: pun-server/
-    image: andrewmacheret/pun
+    image: andrewmacheret/pun-server
     environment:
       VIRTUAL_HOST: pun.andrewmacheret.com
       LETSENCRYPT_HOST: pun.andrewmacheret.com
