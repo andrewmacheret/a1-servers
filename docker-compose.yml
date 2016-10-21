@@ -96,3 +96,6 @@ services:
       LETSENCRYPT_HOST: pun.andrewmacheret.com
       LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
+  pun-to-text:
+    build: pun-to-text/
+    image: andrewmacheret/pun-to-text
