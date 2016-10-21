@@ -99,3 +99,6 @@ services:
   pun-to-text:
     build: pun-to-text/
     image: andrewmacheret/pun-to-text
+    environment:
+      AWS_TOPIC: "${AWS_TOPIC}"
+
