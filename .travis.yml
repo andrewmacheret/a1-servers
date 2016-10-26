@@ -27,20 +27,15 @@ script:
   - set -e
   - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - awk '$1 == "build:" {print $2}' docker-compose.yml | xargs mkdir
-  - docker-compose pull
-  - docker-compose up -d nginx-proxy chess montyhall remote-apis ascii-cow pun
+  - docker-compose pull nginx-proxy
+  - docker-compose up -d nginx-proxy
   # TODO: vta-server, mongo, mysql
-  - sleep 10
+  - sleep 1
   
   - |+
     # run tests
     
     test "$( curl -ksLI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 503 Service Temporarily Unavailable"
-    test "$( curl -ksLI -H "Host: chess.andrewmacheret.com"          localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
-    test "$( curl -ksLI -H "Host: remote-apis.andrewmacheret.com"    localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
-    test "$( curl -ksLI -H "Host: montyhall.andrewmacheret.com"      localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 "
-    test "$( curl -ksLI -H "Host: ascii-cow.andrewmacheret.com"      localhost:"${TEST_PORT}"/cows | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
-    test "$( curl -ksLI -H "Host: pun.andrewmacheret.com"            localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 200 OK"
   
   - docker-compose down
 
