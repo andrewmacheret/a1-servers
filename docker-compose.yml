@@ -100,5 +100,7 @@ services:
     build: pun-to-text/
     image: andrewmacheret/pun-to-text
     environment:
-      AWS_TOPIC: "${AWS_TOPIC}"
-
+      AWS_PARTITION: "aws"
+      AWS_REGION: "us-east-1"
+      AWS_ACCOUNT_ID: "515875352897"
+      CRON: "0 16 * * * /root/send_pun.sh a1 mjc;0 16 * * * mjc /root/send_heart.sh 'also <3' a1 mjc"
