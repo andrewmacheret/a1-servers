@@ -46,4 +46,4 @@ after_success:
   - eval "$(ssh-agent -s)"
   - chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
   - ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
-  - ssh core@servers.andrewmacheret.com "~/servers/a1-servers/restart-service.sh ${SERVICE_NAMES}"
+  - ssh core@servers.andrewmacheret.com "cd ~/servers/a1-servers && git pull && ./restart-service.sh ${SERVICE_NAMES}"
