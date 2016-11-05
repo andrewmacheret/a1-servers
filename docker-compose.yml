@@ -104,3 +104,11 @@ services:
       AWS_REGION: "us-east-1"
       AWS_ACCOUNT_ID: "515875352897"
       CRON: "0 16 * * * /root/send_pun.sh a1 mjc;0 16 * * * mjc /root/send_heart.sh 'also <3' a1 mjc"
+
+  nhl:
+    build: nhl/
+    image: andrewmacheret/nhl-server
+    environment:
+      VIRTUAL_HOST: nhl.andrewmacheret.com
+      LETSENCRYPT_HOST: nhl.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
