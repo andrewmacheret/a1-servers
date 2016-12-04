@@ -103,7 +103,7 @@ services:
       AWS_PARTITION: "aws"
       AWS_REGION: "us-east-1"
       AWS_ACCOUNT_ID: "515875352897"
-      CRON: "0 9 * * * /root/send_pun.sh a1 mjc;1 9 * * * /root/send_text.sh 'also <3' a1 mjc"
+      CRON: "0 9 * * * /root/send_pun.sh a1; 0 18 * * * /root/send_pun.sh mjc"
 
   nhl:
     build: nhl-server/
