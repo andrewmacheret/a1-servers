@@ -7,8 +7,8 @@ services:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "9080:80"
+      - "9443:443"
     volumes:
       - ./store/certs:/etc/nginx/certs:ro
       - /etc/nginx/vhost.d
@@ -30,29 +30,29 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-    ports:
-      - "3306:3306"
+    #ports:
+    #  - "3306:3306"
     volumes:
       - ./store/mysql:/var/lib/mysql
     hostname: mysql
 
-  mongo:
-    image: mongo:3.2
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./store/mongo:/data/db
-    hostname: mongo
+  #mongo:
+  #  image: mongo:3.2
+  #  ports:
+  #    - "27017:27017"
+  #  volumes:
+  #    - ./store/mongo:/data/db
+  #  hostname: mongo
 
   ### functional servers
 
-  chess:
-    build: chess-server/
-    image: andrewmacheret/chess-server
-    environment:
-      VIRTUAL_HOST: chess.andrewmacheret.com
-      LETSENCRYPT_HOST: chess.andrewmacheret.com
-      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+  #chess:
+  #  build: chess-server/
+  #  image: andrewmacheret/chess-server
+  #  environment:
+  #    VIRTUAL_HOST: chess.andrewmacheret.com
+  #    LETSENCRYPT_HOST: chess.andrewmacheret.com
+  #    LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
   montyhall:
     image: andrewmacheret/montyhall-server
@@ -66,8 +66,8 @@ services:
     image: andrewmacheret/vta-tracker-server
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      VIRTUAL_HOST: vta.andrewmacheret.com
-      LETSENCRYPT_HOST: vta.andrewmacheret.com
+      VIRTUAL_HOST: vta-tracker.andrewmacheret.com
+      LETSENCRYPT_HOST: vta-tracker.andrewmacheret.com
       LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
     external_links:
       - mysql
@@ -88,22 +88,22 @@ services:
       LETSENCRYPT_HOST: ascii-cow.andrewmacheret.com
       LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
-  pun:
-    build: pun-server/
-    image: andrewmacheret/pun-server
-    environment:
-      VIRTUAL_HOST: pun.andrewmacheret.com
-      LETSENCRYPT_HOST: pun.andrewmacheret.com
-      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+  #pun:
+  #  build: pun-server/
+  #  image: andrewmacheret/pun-server
+  #  environment:
+  #    VIRTUAL_HOST: pun.andrewmacheret.com
+  #    LETSENCRYPT_HOST: pun.andrewmacheret.com
+  #    LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
-  pun-to-text:
-    build: pun-to-text/
-    image: andrewmacheret/pun-to-text
-    environment:
-      AWS_PARTITION: "aws"
-      AWS_REGION: "us-east-1"
-      AWS_ACCOUNT_ID: "515875352897"
-      CRON: "0 9 * * * /root/send_pun.sh a1; 0 9 * * * /root/send_pun.sh mjc"
+  #pun-to-text:
+  #  build: pun-to-text/
+  #  image: andrewmacheret/pun-to-text
+  #  environment:
+  #    AWS_PARTITION: "aws"
+  #    AWS_REGION: "us-east-1"
+  #    AWS_ACCOUNT_ID: "515875352897"
+  #    CRON: "0 9 * * * /root/send_pun.sh a1; 0 9 * * * /root/send_pun.sh mjc"
 
   nhl:
     build: nhl-server/
@@ -112,3 +112,4 @@ services:
       VIRTUAL_HOST: nhl.andrewmacheret.com
       LETSENCRYPT_HOST: nhl.andrewmacheret.com
       LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+
