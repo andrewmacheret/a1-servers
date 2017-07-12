@@ -33,17 +33,17 @@ script:
   - docker-compose up -d ${SERVICE_NAME}
   - sleep 1
   
-  - |+
-    # run tests
-    
-    test "$( curl -ksLI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 503 Service Temporarily Unavailable"
+  #- |+
+  #  # run tests
+  #  
+  #  test "$( curl -ksLI -H "Host: servers.andrewmacheret.com"        localhost:"${TEST_PORT}"      | grep '^HTTP' | tail -1 | sed 's/\r$//' | tee >(cat 1>&2) )" == "HTTP/1.1 503 Service Temporarily Unavailable"
   
   - docker-compose down
 
 after_success:
-  # ssh deploy
-  - openssl aes-256-cbc -K $encrypted_0d3894087a6a_key -iv $encrypted_0d3894087a6a_iv -in id_rsa_a1-server.enc -out "${TRAVIS_BUILD_DIR}/id_rsa_a1-server" -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
-  - ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
-  - ssh core@servers.andrewmacheret.com "cd ~/servers/a1-servers && git pull && ./restart-service.sh ${SERVICE_NAMES}"
+  ## ssh deploy
+  #- openssl aes-256-cbc -K $encrypted_0d3894087a6a_key -iv $encrypted_0d3894087a6a_iv -in id_rsa_a1-server.enc -out "${TRAVIS_BUILD_DIR}/id_rsa_a1-server" -d
+  #- eval "$(ssh-agent -s)"
+  #- chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  #- ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  #- ssh core@servers.andrewmacheret.com "cd ~/servers/a1-servers && git pull && ./restart-service.sh ${SERVICE_NAMES}"
