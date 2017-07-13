@@ -16,13 +16,20 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
   letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    build: letsencrypt/
+    image: andrewmacheret/docker-letsencrypt-nginx-proxy-companion
+    #image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
     volumes:
       - ./store/certs:/etc/nginx/certs:rw
+      - ./store/letsencrypt:/etc/letsencrypt:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     volumes_from:
       - nginx-proxy
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION}"
 
   ### databases
 
@@ -64,6 +71,8 @@ services:
   vta-tracker:
     build: vta-tracker-server/
     image: andrewmacheret/vta-tracker-server
+    volumes:
+      - ./store/vta-tracker:/store
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       VIRTUAL_HOST: vta-tracker.andrewmacheret.com
@@ -72,13 +81,13 @@ services:
     external_links:
       - mysql
 
-  remote-apis:
-    build: remote-apis/
-    image: andrewmacheret/remote-apis
-    environment:
-      VIRTUAL_HOST: remote-apis.andrewmacheret.com
-      LETSENCRYPT_HOST: remote-apis.andrewmacheret.com
-      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+  #remote-apis:
+  #  build: remote-apis/
+  #  image: andrewmacheret/remote-apis
+  #  environment:
+  #    VIRTUAL_HOST: remote-apis.andrewmacheret.com
+  #    LETSENCRYPT_HOST: remote-apis.andrewmacheret.com
+  #    LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
   ascii-cow:
     build: ascii-cow/
