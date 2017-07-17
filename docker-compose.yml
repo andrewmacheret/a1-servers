@@ -114,11 +114,11 @@ services:
   #    AWS_ACCOUNT_ID: "515875352897"
   #    CRON: "0 9 * * * /root/send_pun.sh a1; 0 9 * * * /root/send_pun.sh mjc"
 
-  nhl:
-    build: nhl-server/
-    image: andrewmacheret/nhl-server
-    environment:
-      VIRTUAL_HOST: nhl.andrewmacheret.com
-      LETSENCRYPT_HOST: nhl.andrewmacheret.com
-      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+  #nhl:
+  #  build: nhl-server/
+  #  image: andrewmacheret/nhl-server
+  #  environment:
+  #    VIRTUAL_HOST: nhl.andrewmacheret.com
+  #    LETSENCRYPT_HOST: nhl.andrewmacheret.com
+  #    LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
