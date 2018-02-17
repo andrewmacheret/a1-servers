@@ -122,3 +122,30 @@ services:
   #    LETSENCRYPT_HOST: nhl.andrewmacheret.com
   #    LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
 
+  temperature-sensor:
+    image: andrewmacheret/temperature-sensor-server
+    volumes:
+      - ./data:/data
+    ports:
+      - "9030:30/udp"
+    environment:
+      VIRTUAL_HOST: temperature-sensor.andrewmacheret.com
+      LETSENCRYPT_HOST: temperature-sensor.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+
+  stride-tabletop:
+    image: andrewmacheret/stride-tabletop
+    volumes:
+      - ./store/stride-tabletop:/data
+    environment:
+      GAME_AI_URL: "${TABLETOP_GAME_AI_URL}"
+      GAME_API_URL: "${TABLETOP_GAME_API_URL}"
+      GAME_API_KEY: "${TABLETOP_GAME_API_KEY}"
+      STRIDE_CLIENT_ID: "${TABLETOP_STRIDE_CLIENT_ID}"
+      STRIDE_SECRET_ID: "${TABLETOP_STRIDE_SECRET_ID}"
+      STORE_DIRECTORY: "/data"
+      PORT: "80"
+      VIRTUAL_HOST: stride-tabletop.andrewmacheret.com
+      LETSENCRYPT_HOST: stride-tabletop.andrewmacheret.com
+      LETSENCRYPT_EMAIL: andrew.macheret@gmail.com
+
